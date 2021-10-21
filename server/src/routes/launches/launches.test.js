@@ -3,13 +3,11 @@ const app = require('../../app');
 
 const { mongoConnect, mongoDisconnect } = require('../../services/mongo');
 const { loadPlanetsData } = require('../../models/planets.model');
-const { loadLaunchesData } = require('../../models/launches.model');
 
 describe('All tests', () => {
     beforeAll( async () => {
         await mongoConnect();
         await loadPlanetsData();
-        await loadLaunchesData();
     })
     afterAll( async () => {
         await mongoDisconnect();
@@ -19,17 +17,17 @@ describe('All tests', () => {
         test('first try', async () => {
             // expect(1+1).toBe(2)
             const response = await request(app)
-                .get('/launches')
+                .get('/v1/launches')
                 .expect('Content-Type', /json/)
                 .expect(200);
         })
 
         test('post /launches', async () => {
             const response = await request(app)
-                .post('/launches')
+                .post('/v1/launches')
                 .send({
                     mission: 'm1',
-                    target: 'yerevan',
+                    target: 'Kepler-296 e',
                     rocket: 'L90',
                     launchDate: '16 March 2024'
                 });
@@ -39,14 +37,14 @@ describe('All tests', () => {
             expect(reqDate).toBe(resDate);
             expect(response.body).toMatchObject({
                 mission: 'm1',
-                target: 'yerevan',
+                target: 'Kepler-296 e',
                 rocket: 'L90',
             })
         })
 
         test('post /launches with wrong data', async () => {
             const response = await request(app)
-                .post('/launches')
+                .post('/v1/launches')
                 .send({
                     mission: 'm1',
                     target: 'yerevan',

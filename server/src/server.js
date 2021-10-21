@@ -1,6 +1,4 @@
 const http = require('http');
-const path = require('path');
-require('dotenv').config({path: path.join(__dirname, '.env')});
 
 const { loadPlanetsData } = require('./models/planets.model');
 const { loadLaunchesData } = require('./models/launches.model');

@@ -8,7 +8,7 @@ jobs:
   build:
     env:
       CI: ture
-      MONGO_URL: mongodb://localhost:27017/nasa
+      MONGO_URL: 'mongodb://localhost:27017/nasa'
     strategy:
       matrix:
         node-version: [16.x]
